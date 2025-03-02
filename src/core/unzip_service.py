@@ -359,8 +359,13 @@ class UnzipService:
         if not FileHelper.contains_files(temp3_path):
             logger.info(f'No files to move from {temp3_path}')
             return
-            
-        dst_path = self.path_config.target_dir / self._generate_folder_name(_id)
+        
+        dst_path = None
+        skip_levels = self.path_config.move_config.skip_parent_levels
+        if skip_levels > 0:
+            dst_path = self.path_config.target_dir
+        else:
+            dst_path = self.path_config.target_dir / self._generate_folder_name(_id)
         logger.info(f'Moving files to target directory: {dst_path}')
         
         if dst_path.exists():
