@@ -1,0 +1,11 @@
+services:
+  vamvideo:
+    db_type: vamvideo
+    default_password: vamvideo
+    paths:
+      source_dir: I:\ACG\vam-download
+      target_dir: I:\ACG\vam-temp-target
+      unzip_temp_dir: I:\ACG\vam-temp\Temp1
+      target_temp_dir: I:\ACG\vam-temp\Temp3
+    move_config:
+      skip_parent_levels: 1  # 跳过的父文件夹层数，0表示不跳过
