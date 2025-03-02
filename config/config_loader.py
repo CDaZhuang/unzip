@@ -5,7 +5,7 @@ from typing import Dict, Any
 
 import yaml
 
-from config.config import PathConfig
+from config.config import PathConfig, MoveConfig
 from src.dao.base import DatabaseType
 
 class ConfigLoader:
@@ -61,12 +61,16 @@ class ConfigLoader:
         """
         service_config = self.get_service_config(service)
         paths = service_config['paths']
+        move_config = MoveConfig(
+            skip_parent_levels=service_config.get('move_config', {}).get('skip_parent_levels', 0)
+        )
         
         return PathConfig(
             source_dir=Path(paths['source_dir']),
             target_dir=Path(paths['target_dir']),
             unzip_temp_dir=Path(paths['unzip_temp_dir']),
-            target_temp_dir=Path(paths['target_temp_dir'])
+            target_temp_dir=Path(paths['target_temp_dir']),
+            move_config=move_config
         )
         
     def get_db_type(self, service: str) -> DatabaseType:
