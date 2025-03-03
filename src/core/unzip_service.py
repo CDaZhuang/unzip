@@ -366,12 +366,11 @@ class UnzipService:
             dst_path = self.path_config.target_dir
         else:
             dst_path = self.path_config.target_dir / self._generate_folder_name(_id)
+            if dst_path.exists():
+                logger.info(f'Removing existing target directory: {dst_path}')
+                shutil.rmtree(dst_path)
         logger.info(f'Moving files to target directory: {dst_path}')
-        
-        if dst_path.exists():
-            logger.info(f'Removing existing target directory: {dst_path}')
-            shutil.rmtree(dst_path)
-        
+
         logger.info(f'Creating target directory: {dst_path}')
         dst_path.mkdir(parents=True, exist_ok=True)
         
